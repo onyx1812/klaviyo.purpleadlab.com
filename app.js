@@ -4,24 +4,25 @@ const
   fs = require('fs'),
   bodyParser = require('body-parser');
 
-const host = 'localhost';
-const port = 8000;
+const
+  host = 'localhost',
+  port = 9000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+const
+  Identify = require('./klaviyo/Identify.js'),
+  StartedCheckout = require('./klaviyo/StartedCheckout.js');
+
 app.route('/')
   .get((req, res) => {
-    res.send('Hello World!')
+    res.send(`
+      <a href="/identify">Identify</a>
+      <a href="/startedcheckout">StartedCheckout</a>
+    `)
   })
-  .post((req, res) => {
-
-  })
-  .put((req, res) => {
-
-  })
-  .delete((req, res) => {
-
-  });
+app.use('/', Identify);
+app.use('/', StartedCheckout);
 
 app.listen(port, host, () => console.log(`Server listens http://${host}:${port}`));
